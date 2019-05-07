@@ -1,0 +1,61 @@
+package plus_3_29;
+
+import java.util.*;
+
+public class divide_conquer {
+	static int sum=0;
+	public static void main(String[] args) {
+		int n;
+		Scanner input = new Scanner(System.in);
+		n=input.nextInt();
+		int[] arr=new int[n];
+		for(int i=0;i<n;i++) {
+			arr[i]=input.nextInt();
+			}
+		mergesort(arr);
+		System.out.println(sum);
+	}
+	
+	private static void mergesort(int[] arr) {
+        mergesort(arr, new int[arr.length], 0, arr.length - 1);
+    }
+	
+	private static void mergesort(int[] arr, int[] temp, int left, int right) {
+        if (left < right) {
+        	
+            int center = (left + right) / 2;
+            mergesort(arr, temp, left, center); 
+            mergesort(arr, temp, center + 1, right); 
+            merge(arr, temp, left, center + 1, right); 
+        }
+	}
+	
+	private static void merge(int[] arr, int[] temp, int leftPos, int rightPos, int rightEnd) {
+        int leftEnd = rightPos - 1;
+        int tempPos = leftPos; 
+        int numEle = rightEnd - leftPos + 1; 
+        while (leftPos <= leftEnd && rightPos <= rightEnd) {
+            if (arr[leftPos] <= arr[rightPos]) 
+            	temp[tempPos++] = arr[leftPos++];
+            else {
+            	//System.out.printf("%d %d "+"¢Ù="+"%d\n",rightEnd,rightPos,sum);
+            	temp[tempPos++] = arr[rightPos++];
+            	sum=sum+leftEnd-leftPos +1;
+            	}
+        }
+        while (leftPos <= leftEnd) { 
+            temp[tempPos++] = arr[leftPos++];
+        }
+        while (rightPos <= rightEnd) {
+            temp[tempPos++] = arr[rightPos++];
+        }
+        for (int i = 0; i < numEle; i++) {
+            arr[rightEnd] = temp[rightEnd];
+            rightEnd--;
+        }
+        
+        //for(int i=0;i<5;i++) {System.out.print(arr[i]);}
+        //System.out.println("arr "+sum);
+    }
+	
+}
